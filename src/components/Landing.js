@@ -1,14 +1,22 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
 
 class Landing extends Component {
     render() {
+        const {message} = this.props;
         return (
             <div>
                 <br/><br/><br/>
-                Landing Page
+                {message}
+                <br/>
+                This is Landing Page. 
             </div>
         )
     }
 }
 
-export default Landing
+const mapStateToProps = (state) => ({
+    message: state.message
+})
+
+export default connect(mapStateToProps)(Landing)
