@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-function Landing() {
-    return (
-        <div>
-            <br/><br/><br/>
-            Landing Page
-        </div>
-    )
+class Landing extends Component {
+    render() {
+        return (
+            <div>
+                <br/><br/><br/>
+                Landing Page
+            </div>
+        )
+    }
 }
 
 export default Landing

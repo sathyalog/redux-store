@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-function Checkout() {
-    return (
-        <div>
-            <br/><br/><br/>
-            Checkout Page
-        </div>
-    )
+class Checkout extends Component {
+    render() {
+        return (
+            <div>
+                <br/><br/><br/>
+                Checkout Page
+            </div>
+        )
+    }
 }
 
 export default Checkout
