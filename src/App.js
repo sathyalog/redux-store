@@ -16,7 +16,7 @@ function App() {
         <Fragment>
           <Navbar/>
           <section className="container">
-          <Route exact path="/" component={Landing}/>
+          <Route exact path="/" component={() => <Landing id={123}/>}/>
             <Switch>
               <Route exact path='/checkout' component={Checkout}/>
               <Route exact path='/product' component={Product}/>
