@@ -1,10 +1,10 @@
 import {createStore, compose, applyMiddleware} from 'redux';
-
+import rootReducer from './reducer'
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const rootReducer = () => ({
-    'message': 'Hello! Welcome to Redux Vegetable Store.'
-});
+// const rootReducer = () => ({
+//     'message': 'Hello! Welcome to Redux Vegetable Store.'
+// });
 
 const store = createStore(
     rootReducer,

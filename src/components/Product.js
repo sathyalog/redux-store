@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
+import {welcomeMsg, addToCart} from './../action';
 import axios from 'axios';
 class Product extends Component {
     constructor(props) {
@@ -11,7 +12,9 @@ class Product extends Component {
     }
 
     async componentDidMount() {
+        const {dispatch} = this.props;
         await this.getProducts();
+        await dispatch(welcomeMsg())
     }
     
 
@@ -27,15 +30,19 @@ class Product extends Component {
         console.log(this.state)
     };
 
+    cartHandler = (name) => {
+        const {dispatch} = this.props;
+        dispatch(addToCart(name))
+    }
 
     
     render() {
-        const {msg} = this.props
-        console.log(this.state.products)
+        const {msg,items} = this.props
+        console.log(items)
         return (
             <div>
                 <br/><br/><br/>
-                <h1 class="display-4">{msg}</h1>
+                <h1 className="display-4">{msg}</h1>
                 <br/><br/><br/>
                 {/* <button className="btn btn-primary" onClick={(e) => this.getProducts(e)}>Get Products</button> */}
                 <div className="row">
@@ -48,14 +55,14 @@ class Product extends Component {
                                                 <img className="pic-1" src={product.image} />
                                             </a>
                                             <ul className="social">
-                                                <li><a href="" data-tip="Add to Cart"><i className="fa fa-shopping-cart"></i></a></li>
+                                                <li><a onClick={(name) => this.cartHandler(product)} data-tip="Add to Cart"><i className="fa fa-shopping-cart"></i></a></li>
                                             </ul>
                                         </div>
                                         <div className="product-content">
                                             <h3 className="title"><a href="#">{product.name}</a></h3>
                                             <div className="price">Rs.{product.price}
                                             </div>
-                                            <a className="add-to-cart" href="">+ Add To Cart</a>
+                                            <a className="add-to-cart" onClick={(name) => this.cartHandler(product)} >+ Add To Cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +76,8 @@ class Product extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    msg: state.message
+    msg: state.welcomeMsg,
+    items: state.addToCart
 })
 
 export default connect(mapStateToProps)(Product)
