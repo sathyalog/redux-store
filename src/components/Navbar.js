@@ -4,16 +4,16 @@ class Navbar extends Component {
     render() {
         return (
             <div>
-                <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-                <ul class="navbar-nav mr-auto">
-                <a class="navbar-brand" href="/"><i class="fas fa-home"></i> Online Store</a>
+                <nav className="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+                <ul className="navbar-nav mr-auto">
+                <a className="navbar-brand" href="/"><i className="fas fa-home"></i> Online Store</a>
                 </ul>
-                <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/product">Products</a>
+                <ul className="navbar-nav">
+                <li className="nav-item">
+                    <a className="nav-link" href="/product">Products</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/checkout"><i class="fas fa-cart-plus"></i></a>
+                <li className="nav-item">
+                    <a className="nav-link" href="/checkout"><i className="fas fa-cart-plus"></i></a>
                 </li>
                 </ul>
                 </nav> 
