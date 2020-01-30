@@ -8,7 +8,11 @@ const initialState = {
 const addToCart = (state=initialState,action) => {
     switch(action.type) {
         case types.ADD_TO_CART:
-            const item = action.val;
+            const quantity = 1;
+            const item = {
+                ...action.val,
+                quantity
+                };
             const items = [
                 ...state.items,
                 item
@@ -31,9 +35,26 @@ const welcomeMsg = (state='',action) => {
     }
 }
 
+const setQuantity = (state=1,action) => {
+    const quantity = action.quantity ? action.quantity: 1;
+    switch(action.type) {
+        case types.SET_QUANTITY:
+            const product= {
+                ...action.val,
+                quantity
+            }
+            return {
+                product  
+            }
+        default:
+            return state
+    }
+}
+
 const reducer = combineReducers({
     addToCart,
-    welcomeMsg
+    welcomeMsg,
+    setQuantity
 });
 
 export default reducer;

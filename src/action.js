@@ -13,3 +13,11 @@ export const welcomeMsg = () => {
         val: 'Hello! Welcome to Redux Vegetable Store.'
     }
 }
+
+export const setQuantity = (quantity,val) => {
+    return {
+        type: types.SET_QUANTITY,
+        quantity,
+        val
+    }
+}
