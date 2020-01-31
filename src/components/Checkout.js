@@ -79,7 +79,7 @@ class Checkout extends Component {
                                                 <td data-th="Quantity">
                                                     <input type="number" className="form-control text-center" onChange={(e) => this.quantityHandler(e,product)} value={product.quantity} />
                                                 </td>
-                                                <td data-th="Subtotal" className="text-center">{product.subTotal ? product.subTotal : product.price}</td>
+                                                <td data-th="Subtotal" className="text-center">{product.subTotal ? product.subTotal : product.price * product.quantity}</td>
                                                 <td className="actions" data-th="">
                                                     <button className="btn btn-danger btn-sm" onClick={(e) => this.removeHandler(product)}><i className="fa fa-trash-alt"></i></button>								
                                                 </td>

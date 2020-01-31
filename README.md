@@ -1,7 +1,7 @@
 ## Online Store
 A basic online store with only Products and checkout page developed using react, redux, redux-saga. No backend is involved and used only an Firebase API to fetch products.
 
-Demo: https://objective-edison-3e877d.netlify.com/
+Demo: https://redux-store-sathyalog.netlify.com/
 
 ---------------------------------------------------------------------------------------------------
 

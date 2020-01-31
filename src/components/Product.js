@@ -27,7 +27,6 @@ class Product extends Component {
         this.setState({
             products: productsReceived,
         });
-        console.log(this.state)
     };
 
     cartHandler = (name) => {
@@ -38,7 +37,6 @@ class Product extends Component {
     
     render() {
         const {msg,items} = this.props
-        console.log(items)
         return (
             <div>
                 <br/><br/><br/>

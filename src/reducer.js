@@ -8,15 +8,25 @@ const initialState = {
 const addToCart = (state=initialState,action) => {
     switch(action.type) {
         case types.ADD_TO_CART:
-            const quantity = 1;
+            let quantity = 1;
+            const product = action.val;
+            product.quantity = quantity;
+            let duplicate = state.items.find(prod => product.id === prod.id);
+            console.log(duplicate)
+            quantity = duplicate && duplicate.id ? quantity+1 : quantity;
             const item = {
                 ...action.val,
                 quantity
-                };
+            };
             const items = [
                 ...state.items,
                 item
             ];
+            
+            const index = items.indexOf(duplicate);
+            if (index > -1) {
+                items.splice(index, 1);
+            }
 
             return {
                 items
