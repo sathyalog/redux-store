@@ -19,7 +19,7 @@ class Product extends Component {
     
 
     async getProducts(e) {
-        const productsReceived = await axios.get('https://firebasestorage.googleapis.com/v0/b/buyforyou-a5fdc.appspot.com/o/products.json?alt=media&token=8a6d0757-478d-4f53-b73d-1245636f7468')
+        const productsReceived = await axios.get('https://firebasestorage.googleapis.com/v0/b/redux-store-c6c24.appspot.com/o/products.json?alt=media&token=68c5e12f-1e53-4b5e-b6e8-350faefe3aa7')
         .then(res => {
             return res.data
         })

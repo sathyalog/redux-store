@@ -7,6 +7,13 @@ export const addToCart = (val) => {
     }
 }
 
+export const removeFromCart = (val) => {
+    return {
+        type: types.REMOVE_FROM_CART,
+        val
+    }
+}
+
 export const welcomeMsg = () => {
     return {
         type: types.MESSAGE,

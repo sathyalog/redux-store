@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {setQuantity,productTotal} from './../action';
+import {setQuantity,productTotal, removeFromCart} from './../action';
 import PaypalBtn from 'react-paypal-checkout';
 
 class Checkout extends Component {
@@ -27,6 +27,13 @@ class Checkout extends Component {
         const prodQuan = quantity.product && quantity.product.quantity;
         const total = price * prodQuan;
         dispatch(productTotal(prod,total));
+    }
+
+    removeHandler = async (e,prod) => {
+        e.preventDefault();
+        const { dispatch } = this.props;
+        await dispatch(removeFromCart(prod));
+        this.updateProductTotal(prod);
     }
 
     render() {
@@ -74,7 +81,7 @@ class Checkout extends Component {
                                                 </td>
                                                 <td data-th="Subtotal" className="text-center">{product.subTotal ? product.subTotal : product.price}</td>
                                                 <td className="actions" data-th="">
-                                                    <button className="btn btn-danger btn-sm"><i className="fa fa-trash-alt"></i></button>								
+                                                    <button className="btn btn-danger btn-sm" onClick={(e) => this.removeHandler(product)}><i className="fa fa-trash-alt"></i></button>								
                                                 </td>
                                             </tr>
                                                     
