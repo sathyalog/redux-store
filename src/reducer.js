@@ -51,10 +51,27 @@ const setQuantity = (state=1,action) => {
     }
 }
 
+const productTotal = (state=0,action) => {
+    const productTotal = action.val;
+    switch(action.type) {
+        case types.PRODUCT_TOTAL:
+            const product= {
+                ...action.prod,
+                productTotal
+            }
+            return {
+                product  
+            }
+        default:
+            return state
+    }
+}
+
 const reducer = combineReducers({
     addToCart,
     welcomeMsg,
-    setQuantity
+    setQuantity,
+    productTotal
 });
 
 export default reducer;

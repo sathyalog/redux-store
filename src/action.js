@@ -21,3 +21,11 @@ export const setQuantity = (quantity,val) => {
         val
     }
 }
+
+export const productTotal = (prod,val) => {
+    return {
+        type: types.PRODUCT_TOTAL,
+        prod,
+        val
+    }
+}

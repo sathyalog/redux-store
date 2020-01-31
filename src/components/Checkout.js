@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {setQuantity} from './../action';
+import {setQuantity,productTotal} from './../action';
+import PaypalBtn from 'react-paypal-checkout';
 
 class Checkout extends Component {
     constructor(props) {
@@ -12,17 +13,30 @@ class Checkout extends Component {
         }
     }
     
-    quantityHandler = (e,prod) => {
+    quantityHandler = async (e,prod) => {
         e.preventDefault();
         const quan = parseInt(e.target.value);
         const {dispatch} = this.props;
-        dispatch(setQuantity(quan,prod));
+        await dispatch(setQuantity(quan,prod));
+        this.updateProductTotal(prod);
+    }
+
+    updateProductTotal = (prod) => {
+        const { quantity, dispatch } = this.props;
+        const price = quantity.product && quantity.product.price;
+        const prodQuan = quantity.product && quantity.product.quantity;
+        const total = price * prodQuan;
+        dispatch(productTotal(prod,total));
     }
 
     render() {
-        const {products, quantity} = this.props;
+        const client = {
+            sandbox: 'Acar5qjKz_ASZAAdd-QK6UPagP8XF8Xd41BF8qAp7r8puu3epqmKZqRR52OrKYtnPAbkOSrjE2i-JP8Y',
+        }	
+        const {products, quantity, productTotal} = this.props;
         const items = products.items;
-        
+        const grandTotal = items && items.reduce((a,b) => a + b.price * b.quantity,0);
+        console.log(grandTotal);
         return (
             <div className="container">
                 <table id="cart" className="table table-hover table-condensed">
@@ -40,6 +54,9 @@ class Checkout extends Component {
                                 if(quantity.product && product.id === quantity.product.id) {
                                     product.quantity = quantity.product.quantity
                                 }
+                                if(productTotal.product && product.id === productTotal.product.id) {
+                                    product.subTotal = productTotal.product.productTotal
+                                }
                                 return (
                                             <tr key={product.id}>
                                                 <td data-th="Product">
@@ -55,9 +72,8 @@ class Checkout extends Component {
                                                 <td data-th="Quantity">
                                                     <input type="number" className="form-control text-center" onChange={(e) => this.quantityHandler(e,product)} value={product.quantity} />
                                                 </td>
-                                                <td data-th="Subtotal" className="text-center">{product.price}</td>
+                                                <td data-th="Subtotal" className="text-center">{product.subTotal ? product.subTotal : product.price}</td>
                                                 <td className="actions" data-th="">
-                                                    <button className="btn btn-info btn-sm"><i className="fa fa-sync"></i></button>
                                                     <button className="btn btn-danger btn-sm"><i className="fa fa-trash-alt"></i></button>								
                                                 </td>
                                             </tr>
@@ -73,10 +89,10 @@ class Checkout extends Component {
                             
                                 </tr>
                                 <tr>
-                                    <td><Link to="/product" className="btn btn-warning"><i className="fa fa-angle-left"></i> Continue Shopping</Link></td>
+                                    <td><Link to="/" className="btn btn-success"><i className="fa fa-angle-left"></i> Continue Shopping</Link></td>
                                     <td colSpan="2" className="hidden-xs"></td>
-                                    <td className="hidden-xs text-center"><strong>Total Rs.180.00</strong></td>
-                                    <td><a href="https://www.paypal.com/webapps/shoppingcart?mfid=1546373779156_cb91e3a2b2dc7&flowlogging_id=cb91e3a2b2dc7#/checkout/shoppingCart" className="btn btn-success btn-block">Checkout <i className="fa fa-angle-right"></i></a></td>
+                                    <td className="hidden-xs text-center"><strong>Total Rs.{grandTotal}</strong></td>
+                                    <td><PaypalBtn client={client} currency={'USD'} total={grandTotal} /> </td> {/* <span id="paypal-button-container"></span> */}
                                 </tr>
                             </tfoot>
                         </table>
@@ -88,7 +104,8 @@ class Checkout extends Component {
 const mapStateToProps = (state) =>({
     msg: state.welcomeMsg,
     products: state.addToCart,
-    quantity: state.setQuantity
+    quantity: state.setQuantity,
+    productTotal: state.productTotal
 })
 
 export default connect(mapStateToProps)(Checkout);
