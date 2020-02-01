@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import {welcomeMsg, addToCart} from './../action';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 class Product extends Component {
     constructor(props) {
         super(props)
@@ -29,16 +31,22 @@ class Product extends Component {
         });
     };
 
-    cartHandler = (name) => {
+    cartHandler =async  (name) => {
         const {dispatch} = this.props;
-        dispatch(addToCart(name))
+        await dispatch(addToCart(name));
+        this.notify();
     }
 
-    
+    notify = () => toast("Item added to Cart !", {
+        position: toast.POSITION.TOP_RIGHT
+    });
+
     render() {
+        
         const {msg,items} = this.props
         return (
             <div>
+                <ToastContainer autoClose={1500} />
                 <br/><br/><br/>
                 <h1 className="display-4">{msg}</h1>
                 <br/><br/><br/>
