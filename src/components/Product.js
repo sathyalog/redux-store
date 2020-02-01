@@ -2,8 +2,16 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import {welcomeMsg, addToCart} from './../action';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './style.css';
+
+const Zoom = cssTransition({
+    enter: 'zoomIn',
+    exit: 'zoomOut',
+    // default to 750ms, can be omitted
+    duration: 750,
+  });
 class Product extends Component {
     constructor(props) {
         super(props)
@@ -38,7 +46,7 @@ class Product extends Component {
     }
 
     notify = () => toast("Item added to Cart !", {
-        position: toast.POSITION.TOP_RIGHT
+        transition: Zoom,
     });
 
     render() {
