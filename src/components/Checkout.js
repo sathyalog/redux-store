@@ -81,10 +81,9 @@ class Checkout extends Component {
                                                 </td>
                                                 <td data-th="Subtotal" className="text-center">{product.subTotal ? product.subTotal : product.price * product.quantity}</td>
                                                 <td className="actions" data-th="">
-                                                    <button className="btn btn-danger btn-sm" onClick={(e) => this.removeHandler(product)}><i className="fa fa-trash-alt"></i></button>								
+                                                    <button className="btn btn-danger btn-sm" onClick={(e) => this.removeHandler(e,product)}><i className="fa fa-trash-alt"></i></button>								
                                                 </td>
-                                            </tr>
-                                                    
+                                            </tr>                   
                                     )
                                 }
                             )
@@ -93,7 +92,6 @@ class Checkout extends Component {
                             <tfoot>
                                 <tr className="visible-xs">
                                     <td className="text-center"><strong>Total 1.99</strong></td>
-                            
                                 </tr>
                                 <tr>
                                     <td><Link to="/" className="btn btn-success"><i className="fa fa-angle-left"></i> Continue Shopping</Link></td>

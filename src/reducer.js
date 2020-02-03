@@ -31,6 +31,15 @@ const addToCart = (state=initialState,action) => {
             return {
                 items
             }
+        case types.REMOVE_FROM_CART:
+            {
+                const removeItem = action.val;
+                const cartItems = [...state.items];
+                let items = cartItems.filter( prod => prod.id !== removeItem.id ); 
+                return {
+                    items
+                }
+            }
         default:
             return state
     }
@@ -77,26 +86,12 @@ const productTotal = (state=0,action) => {
     }
 }
 
-const removeFromCart = (state='',action) => {
-    switch(action.type) {
-        case types.REMOVE_FROM_CART:
-            const removeItem = action.val;
-            const cartItems = [...state.items];
-            let filteredItems = cartItems.filter( id => id === removeItem.id ); 
-            return {
-                filteredItems
-            }
-        default:
-            return state;
-    } 
-}
 
 const reducer = combineReducers({
     addToCart,
     welcomeMsg,
     setQuantity,
     productTotal,
-    removeFromCart
 });
 
 export default reducer;
