@@ -45,7 +45,7 @@ class Product extends Component {
         this.notify();
     }
 
-    notify = () => toast("Item added to Cart !", {
+    notify = () => toast("🚀 Item added to Cart!", {
         transition: Zoom,
     });
 

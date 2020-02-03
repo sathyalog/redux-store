@@ -3,6 +3,7 @@ A basic online store with only Products and checkout page developed using react,
 
 Demo: https://redux-store-sathyalog.netlify.com/
 
+![Demo](/screenshots/redux-store.gif)
 ---------------------------------------------------------------------------------------------------
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
