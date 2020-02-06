@@ -1,13 +1,16 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'; 
 import {Provider} from 'react-redux';
 import './App.css';
 import Navbar from './components/Navbar';
-import Landing from './components/Landing';
 import Checkout from './components/Checkout';
-import Product from './components/Product';
 import store from './store';
-
+import Loading from './components/Loading';
+const Product = React.lazy(() => 
+  new Promise(resolve => setTimeout(resolve, 750)).then(() =>
+      import('./components/Product')
+    )
+);
 
 function App() {
   return (
@@ -16,11 +19,13 @@ function App() {
         <Fragment>
           <Navbar/>
           <section className="container">
-          <Route exact path="/" component={Product}/>
-            <Switch>
-              <Route exact path='/checkout' component={Checkout}/>
-              <Route exact path='/product' component={Product}/>
-            </Switch>
+            <Suspense fallback={<Loading/>}>
+            <Route exact path="/" component={Product}/>
+              <Switch>
+                <Route exact path='/checkout' component={Checkout}/>
+                <Route exact path='/product' component={Product}/>
+              </Switch>
+              </Suspense>
           </section>
         </Fragment>
       </Router>
