@@ -5,6 +5,11 @@ const initialState = {
     items:[]
 }
 
+const step1FormState = {
+    firstName:'',
+    lastName: '',
+}
+
 const addToCart = (state=initialState,action) => {
     switch(action.type) {
         case types.ADD_TO_CART:
@@ -97,13 +102,32 @@ const getFormData = (state={},action) => {
     }
 }
 
+const updateForms = (state=step1FormState,action) => {
+    switch(action.type){
+        case types.UPDATE_FIELDS:
+            const val = action.val;
+            if(action.elem.name === 'firstName') {
+                step1FormState.firstName = val.firstName
+            } 
+            if(action.elem.name === 'lastName') {
+                step1FormState.lastName = val.lastName
+            }
+            return {
+                step1FormState
+            }
+        default:
+            return state;
+    }
+}
+
 
 const reducer = combineReducers({
     addToCart,
     welcomeMsg,
     setQuantity,
     productTotal,
-    getFormData
+    getFormData,
+    updateForms
 });
 
 export default reducer;

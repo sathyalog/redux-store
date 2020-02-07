@@ -42,3 +42,11 @@ export const getFormData = () => {
         type: types.GET_FORMDATA
     }
 }
+
+export const updateFormFields = (val,elem) => {
+    return {
+        type: types.UPDATE_FIELDS,
+        val,
+        elem
+    }
+}
