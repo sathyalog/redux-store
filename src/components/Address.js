@@ -1,49 +1,63 @@
 import React, { Component, Fragment } from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
-import {getFormData,welcomeMsg, updateFormFields} from './../action';
+import {getFormData, updateFormFields} from './../action';
 
 const styleButton = {
     color:'#ffffff',
     cursor:'pointer'
 }
-class Register extends Component {
+export class Address extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
-            formBuilder:[],
-            firstName:'',
-            lastName:'',
+            addressLine1:'',
+            addressLine2:'',
+            city:'',
+            state:'',
+            zip:''
         }
     }
 
     componentDidMount() {
         const {dispatch} = this.props;
-        dispatch(welcomeMsg());
         dispatch(getFormData());
     }
 
-    populateStep1(formData) {
+    populateStep2(formData) {
         if(formData) {
-            const step1 = formData.filter(item => item.route ==='register-step1');
-            return step1;
+            const step2 = formData.filter(item => item.route ==='register-step2');
+            return step2;
         }else {
             return formData;
-        }
-            
+        }      
     }
 
     inputHandler = (e,elem) => {
-        console.log(e.target);
-        if(elem.name === 'firstName'){
+        if(elem.name === 'addressLine1'){
             this.setState({
-                firstName: e.target.value
+                addressLine1: e.target.value
             }) 
         }
-        if(elem.name === 'lastName'){
+        if(elem.name === 'addressLine2'){
             this.setState({
-                lastName: e.target.value
+                addressLine2: e.target.value
+            }) 
+        }
+        if(elem.name === 'city'){
+            this.setState({
+                city: e.target.value
+            }) 
+        }
+        if(elem.name === 'state'){
+            this.setState({
+                state: e.target.value
+            }) 
+        }
+        if(elem.name === 'zip'){
+            this.setState({
+                zip: e.target.value
             }) 
         }
     }
@@ -56,10 +70,10 @@ class Register extends Component {
     
     render() {
         const {message,formData, updateForm} = this.props;
-        const step1 = this.populateStep1(formData)
+        const step2 = this.populateStep2(formData)
         return (
             <form >
-                {step1 && step1.map(form =>{
+                {step2 && step2.map(form =>{
                     return(
                         <div key={form.title}>
                             {form.elements.map(element =>  {
@@ -72,18 +86,19 @@ class Register extends Component {
                                 return(
                                     <div key={element.caption}>
                                         <b>{element.caption} </b>
-                                         {element.name !== 'next' && <input type={element.type} 
+                                        {element.name !=='submit' && <input type={element.type} 
                                             name={element.name} 
                                             className="form-control"
                                             value={element.initialValue ? element.initialValue : this.state.inputValue} 
-                                            enabled={element.enabled} 
+                                            disabled={element.enabled === true ? '': 'disabled'} 
                                             required={element.required} 
                                             onChange={(e) => this.inputHandler(e,element)} 
-                                            onBlur={() => this.updateInput(this.state,element)}>
+                                            onBlur={() => this.updateInput(this.state,element)}
+                                            >
                                          </input>
-                                         }<br/>
-                                         {element.name ==='next' && 
-                                            <Link to="/address" className="nav-link" >
+                                        }<br/>
+                                         {element.name ==='submit' && 
+                                            <Link to="/success" className="nav-link" >
                                                 <input type={element.type} style={styleButton} className="btn btn-dark" name={element.name} value={element.initialValue} />
                                             </Link>
                                          }
@@ -99,9 +114,8 @@ class Register extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    message: state.welcomeMsg,
     formData: state.getFormData.formjson,
     updateForm: state.updateForms
 })
 
-export default connect(mapStateToProps)(Register)
+export default connect(mapStateToProps)(Address)

@@ -10,6 +10,22 @@ const step1FormState = {
     lastName: '',
 }
 
+const step2FormState = {
+    addressLine1:'',
+    addressLine2: '',
+    city:'',
+    state:'',
+    zip:''
+}
+
+const formInitialState = [
+    {
+        step1FormState,
+        step2FormState
+    }
+    
+]
+
 const addToCart = (state=initialState,action) => {
     switch(action.type) {
         case types.ADD_TO_CART:
@@ -102,7 +118,7 @@ const getFormData = (state={},action) => {
     }
 }
 
-const updateForms = (state=step1FormState,action) => {
+const updateForms = (state=formInitialState,action) => {
     switch(action.type){
         case types.UPDATE_FIELDS:
             const val = action.val;
@@ -112,8 +128,24 @@ const updateForms = (state=step1FormState,action) => {
             if(action.elem.name === 'lastName') {
                 step1FormState.lastName = val.lastName
             }
+            if(action.elem.name === 'addressLine1') {
+                step2FormState.addressLine1 = val.addressLine1
+            } 
+            if(action.elem.name === 'addressLine2') {
+                step2FormState.addressLine2 = val.addressLine2
+            }
+            if(action.elem.name === 'city') {
+                step2FormState.city = val.city
+            } 
+            if(action.elem.name === 'state') {
+                step2FormState.state = val.state
+            }
+            if(action.elem.name === 'zip') {
+                step2FormState.zip = val.zip
+            }
             return {
-                step1FormState
+                step1FormState,
+                step2FormState
             }
         default:
             return state;
