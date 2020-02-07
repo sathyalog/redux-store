@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import {connect} from 'react-redux';
-import { Link } from 'react-router-dom';
-import {getFormData, updateFormFields, formSubmitted} from './../action';
+import {compose} from 'redux';
+import { Link, withRouter } from 'react-router-dom';
+import {getFormData, updateFormFields, formSubmit} from './../action';
 
 const styleButton = {
     color:'#ffffff',
@@ -67,9 +68,10 @@ export class Address extends Component {
         dispatch(updateFormFields(val,elem));
     }
 
-    submitHandler = (e) => {
+    formSubmission = async () => {
         const {dispatch} = this.props;
-        dispatch(formSubmitted());
+        await dispatch(formSubmit(true));
+        this.props.history.push("/success");
     }
     
     render() {
@@ -102,9 +104,11 @@ export class Address extends Component {
                                          </input>
                                         }<br/>
                                          {element.name ==='submit' && 
-                                            <Link to="/success" className="nav-link" >
-                                                <input type={element.type} style={styleButton} className="btn btn-dark" name={element.name} value={element.initialValue} onClick={this.submitHandler}/>
-                                            </Link>
+                                            
+                                                <button type={element.type} style={styleButton} className="btn btn-dark" name={element.name} value={element.initialValue} onClick={this.formSubmission} >
+                                                    {element.initialValue}
+                                                </button>
+                                           
                                          }
                                     </div>
                                 )
@@ -119,7 +123,12 @@ export class Address extends Component {
 
 const mapStateToProps = (state) => ({
     formData: state.getFormData.formjson,
-    updateForm: state.updateForms
+    updateForm: state.updateForms,
+    formSubmit: state.formSubmit
 })
 
-export default connect(mapStateToProps)(Address)
+// export default connect(mapStateToProps)(Address)
+export default compose(
+    withRouter,
+    connect(mapStateToProps)
+  )(Address);

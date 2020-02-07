@@ -51,9 +51,9 @@ export const updateFormFields = (val,elem) => {
     }
 }
 
-export const formSubmitted = () => {
+export const formSubmit = (val) => {
     return {
         type: types.FORM_SUBMITTED,
-        val: true
+        val
     }
 }

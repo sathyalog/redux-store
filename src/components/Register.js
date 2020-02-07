@@ -1,12 +1,18 @@
 import React, { Component, Fragment } from 'react';
 import {connect} from 'react-redux';
-import { Link } from 'react-router-dom';
+import {compose} from 'redux';
+import { Link, withRouter } from 'react-router-dom';
 import {getFormData,welcomeMsg, updateFormFields} from './../action';
+// import { history} from './../history';
 
 const styleButton = {
     color:'#ffffff',
     cursor:'pointer'
 }
+
+// const location = {
+//     pathname: '/address',
+//   }
 class Register extends Component {
     constructor(props) {
         super(props)
@@ -54,6 +60,10 @@ class Register extends Component {
         dispatch(updateFormFields(val,elem));
     }
     
+    nextPage = () => {
+        //history.push(location);
+        this.props.history.push("/address");
+    }
     render() {
         const {message,formData, updateForm} = this.props;
         const step1 = this.populateStep1(formData)
@@ -77,15 +87,15 @@ class Register extends Component {
                                             className="form-control"
                                             value={element.initialValue ? element.initialValue : this.state.inputValue} 
                                             enabled={element.enabled} 
-                                            required={element.required} 
+                                            required="true"
                                             onChange={(e) => this.inputHandler(e,element)} 
                                             onBlur={() => this.updateInput(this.state,element)}>
                                          </input>
                                          }<br/>
                                          {element.name ==='next' && 
-                                            <Link to="/address" className="nav-link" >
-                                                <input type={element.type} style={styleButton} className="btn btn-dark" name={element.name} value={element.initialValue} />
-                                            </Link>
+                                                <button type={element.type} style={styleButton} className="btn btn-dark" name={element.name} value={element.initialValue} onClick={this.nextPage}>
+                                                    {element.initialValue}
+                                                </button>  
                                          }
                                     </div>
                                 )
@@ -104,4 +114,8 @@ const mapStateToProps = (state) => ({
     updateForm: state.updateForms
 })
 
-export default connect(mapStateToProps)(Register)
+//export default connect(mapStateToProps)(Register)
+export default compose(
+    withRouter,
+    connect(mapStateToProps)
+  )(Register);

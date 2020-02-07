@@ -1,7 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import {connect} from 'react-redux';
+import {compose} from 'redux';
+import { Link, withRouter } from 'react-router-dom';
 
 export class Success extends Component {
+    componentDidMount() {
+        if (this.props.history.action === "POP") {
+            this.props.history.push("/register");
+        }
+    }
     render() {
         const {updateForm} = this.props;
         return (
@@ -34,7 +41,12 @@ export class Success extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    updateForm: state.updateForms
+    updateForm: state.updateForms,
+    formSubmit: state.formSubmit
 })
 
-export default connect(mapStateToProps)(Success)
+// export default connect(mapStateToProps)(Success)
+export default compose(
+    withRouter,
+    connect(mapStateToProps)
+  )(Success);
