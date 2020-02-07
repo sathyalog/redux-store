@@ -86,12 +86,24 @@ const productTotal = (state=0,action) => {
     }
 }
 
+const getFormData = (state={},action) => {
+    switch(action.type) {
+        case types.GET_FORMDATA:
+            return { ...state, loading: true };
+        case types.GET_FORMDATA_RECEIVED:
+            return { ...state, formjson: action.data, loading: false }
+        default:
+            return state;
+    }
+}
+
 
 const reducer = combineReducers({
     addToCart,
     welcomeMsg,
     setQuantity,
     productTotal,
+    getFormData
 });
 
 export default reducer;

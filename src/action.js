@@ -36,3 +36,9 @@ export const productTotal = (prod,val) => {
         val
     }
 }
+
+export const getFormData = () => {
+    return {
+        type: types.GET_FORMDATA
+    }
+}
