@@ -51,7 +51,7 @@ class Product extends Component {
 
     render() {
         
-        const {msg,items} = this.props
+        const {msg} = this.props
         return (
             <div>
                 <ToastContainer autoClose={1500} style={{position:'absolute',top:'60px'}}/>

@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {connect} from 'react-redux';
-import axios from 'axios';
 import {getFormData,welcomeMsg} from './../action';
 
 class Register extends Component {
@@ -8,7 +7,8 @@ class Register extends Component {
         super(props)
     
         this.state = {
-            formBuilder:[]
+            formBuilder:[],
+            inputValue:''
         }
     }
 
@@ -17,37 +17,54 @@ class Register extends Component {
         dispatch(welcomeMsg());
         dispatch(getFormData());
     }
+
+    populateStep1(formData) {
+        if(formData) {
+            const step1 = formData.filter(item => item.route ==='register-step1');
+            return step1;
+        }else {
+            return formData;
+        }
+            
+    }
+
+    inputHandler = (e) => {
+        this.setState({
+            inputValue: e.target.value
+        })
+    }
     
     render() {
         const {message,formData} = this.props;
+        const step1 = this.populateStep1(formData)
         return (
-            <div>
-                {message}
-                {formData && formData.map(form => {
+            <form>
+                {step1 && step1.map(form =>{
                     return(
                         <div key={form.title}>
-                            {form.title}
-                            {form.route}
-                            {form.elements.map(element => {
+                            {form.elements.map(element =>  {
                                 return(
-                                    <div>
-                                        {element.name}
-                                        {element.type}
-                                        {element.component}
-                                        {element.caption}
-                                        {element.initialValue}
-                                        {element.enabled}
-                                        {element.required}
+                                    <div key={element.caption}>
+                                        <b>{element.caption} </b>
+                                        {element.name !== 'gender' && <input type={element.type} name={element.name} value={this.state.inputValue? this.state.inputValue :element.initialValue} enabled={element.enabled} required={element.required} onChange={this.inputHandler} ></input>}
+                                        {element.options && element.options.map(({ type, initialValue, title,checked }, index) => (
+                                            <Fragment key={title}>
+                                                <span>{title} </span>
+                                                <input
+                                                type={type}
+                                                inline
+                                                checked={checked}
+                                                key={`${initialValue}_${index}`}
+                                                /> &nbsp;
+                                            </Fragment>
+                                        ))}<br/>
                                     </div>
                                 )
-                            })}
+                            },this)}
                         </div>
                     )
-                })}
-                <form>
-
-                </form>
-            </div>
+                },this)}
+            </form>
         )
     }
 }
