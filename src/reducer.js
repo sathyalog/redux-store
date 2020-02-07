@@ -152,6 +152,15 @@ const updateForms = (state=formInitialState,action) => {
     }
 }
 
+const formSubmitted = (state='',action) => {
+    switch(action.val) {
+        case types.FORM_SUBMITTED:
+            return action.val;
+        default:
+            return state;
+    }
+}
+
 
 const reducer = combineReducers({
     addToCart,
@@ -159,7 +168,8 @@ const reducer = combineReducers({
     setQuantity,
     productTotal,
     getFormData,
-    updateForms
+    updateForms,
+    formSubmitted
 });
 
 export default reducer;

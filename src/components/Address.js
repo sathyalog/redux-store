@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
-import {getFormData, updateFormFields} from './../action';
+import {getFormData, updateFormFields, formSubmitted} from './../action';
 
 const styleButton = {
     color:'#ffffff',
@@ -64,15 +64,19 @@ export class Address extends Component {
 
     updateInput = (val,elem) => {
         const {dispatch} = this.props;
-        console.log(val);
         dispatch(updateFormFields(val,elem));
+    }
+
+    submitHandler = (e) => {
+        const {dispatch} = this.props;
+        dispatch(formSubmitted());
     }
     
     render() {
         const {message,formData, updateForm} = this.props;
         const step2 = this.populateStep2(formData)
         return (
-            <form >
+            <form>
                 {step2 && step2.map(form =>{
                     return(
                         <div key={form.title}>
@@ -99,7 +103,7 @@ export class Address extends Component {
                                         }<br/>
                                          {element.name ==='submit' && 
                                             <Link to="/success" className="nav-link" >
-                                                <input type={element.type} style={styleButton} className="btn btn-dark" name={element.name} value={element.initialValue} />
+                                                <input type={element.type} style={styleButton} className="btn btn-dark" name={element.name} value={element.initialValue} onClick={this.submitHandler}/>
                                             </Link>
                                          }
                                     </div>

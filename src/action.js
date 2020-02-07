@@ -50,3 +50,10 @@ export const updateFormFields = (val,elem) => {
         elem
     }
 }
+
+export const formSubmitted = () => {
+    return {
+        type: types.FORM_SUBMITTED,
+        val: true
+    }
+}
