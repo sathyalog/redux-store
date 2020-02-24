@@ -118,6 +118,18 @@ const getFormData = (state={},action) => {
     }
 }
 
+const getAllProducts = (state={},action) => {
+    switch(action.type) {
+        case types.GET_PRODUCTS:
+            return { ...state, loading: true };
+        case types.PRODUCTS_RECEIVED:
+            return { ...state, data: action.data, loading: false }
+        default:
+            return state;
+    }
+}
+
+
 const updateForms = (state=formInitialState,action) => {
     switch(action.type){
         case types.UPDATE_FIELDS:
@@ -169,7 +181,8 @@ const reducer = combineReducers({
     productTotal,
     getFormData,
     updateForms,
-    formSubmitted
+    formSubmitted,
+    getAllProducts
 });
 
 export default reducer;

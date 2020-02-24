@@ -40,7 +40,7 @@ class Navbar extends Component {
                     <Link to="/register" className="nav-link" style={styleLinks}>Register &nbsp;<i className="fa fa-user-circle" aria-hidden="true"></i></Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/product" className="nav-link" style={styleLinks}>All Products &nbsp;<i className="fa fa-th-large" aria-hidden="true"></i></Link>
+                    <Link to="/product" className="nav-link" style={styleLinks}>Products &nbsp;<i className="fa fa-th-large" aria-hidden="true"></i></Link>
                 </li>
                 <li className="nav-item">
                     <Link to="/checkout" className="nav-link" style={styleLinks}>Cart <i className="fas fa-cart-plus"></i><span className="badge" style={styleBadge}>{products.items ? products.items.length : 0}</span></Link>

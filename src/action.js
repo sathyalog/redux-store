@@ -43,6 +43,12 @@ export const getFormData = () => {
     }
 }
 
+export const getAllProducts = () => {
+    return {
+        type: types.GET_PRODUCTS
+    }
+}
+
 export const updateFormFields = (val,elem) => {
     return {
         type: types.UPDATE_FIELDS,

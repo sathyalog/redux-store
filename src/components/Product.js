@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
-import {welcomeMsg, addToCart} from './../action';
+import {welcomeMsg, addToCart, getAllProducts} from './../action';
 import axios from 'axios';
 import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,7 +24,8 @@ class Product extends Component {
     async componentDidMount() {
         const {dispatch} = this.props;
         await this.getProducts();
-        await dispatch(welcomeMsg())
+        await dispatch(welcomeMsg());
+        await dispatch(getAllProducts());
     }
     
 
@@ -49,15 +50,65 @@ class Product extends Component {
         transition: Zoom,
     });
 
+    filterVegetables = (allProds, veg) => {
+        const vegs = allProds.filter(prod => {
+            return prod.category === veg
+        });
+        this.setState({
+            products: vegs,
+        });
+    }
+
+    filterFruits = (allProds, fruit) => {
+        const fruits = allProds.filter(prod => {
+            return prod.category === fruit
+        });
+        this.setState({
+            products: fruits,
+        });
+    }
+
+    filterNuts = (allProds, nut) => {
+        const nuts = allProds.filter(prod => {
+            return prod.category === nut
+        });
+        this.setState({
+            products: nuts,
+        });
+    }
+
+    filterGroceries = (allProds, grocery) => {
+        const groceries = allProds.filter(prod => {
+            return prod.category === grocery
+        });
+        this.setState({
+            products: groceries,
+        });
+    }
+
+    showAll = (allProds) => {
+        this.setState({
+            products: allProds,
+        });
+    }
+
     render() {
         
-        const {msg} = this.props
+        const {msg,productList} = this.props;
         return (
             <div>
                 <ToastContainer autoClose={1500} style={{position:'absolute',top:'60px'}}/>
                 <br/><br/><br/>
                 <h1 className="display-4">{msg}</h1>
                 <br/><br/><br/>
+                
+                <div class="filter-nav"> <span class="h4">Filter By</span>
+                    <button type="button" className="btn padbtn btn-lg btn btn-success active" onClick={() => this.showAll(productList)} data-filter="">All</button>
+                    <button type="button" className="btn padbtn btn-lg btn-primary" onClick={() => this.filterVegetables(productList,'vegetables')} data-filter="vegetables">Vegetables</button>
+                    <button type="button" className="btn padbtn btn-lg btn-warning" onClick={() => this.filterFruits(productList,'fruits')} data-filter="fruits">Fruits</button>
+                    <button  type="button" className="btn padbtn btn-lg btn-secondary" onClick={() => this.filterNuts(productList,'nuts')} data-filter="nuts">Nuts</button>
+                    <button  type="button" className="btn padbtn btn-lg btn-info" onClick={() => this.filterGroceries(productList,'groceries')} data-filter="nuts">Groceries</button>
+                </div>
                 {/* <button className="btn btn-primary" onClick={(e) => this.getProducts(e)}>Get Products</button> */}
                 <div className="row">
                     { this.state.products && this.state.products.map(product => {
@@ -91,7 +142,8 @@ class Product extends Component {
 
 const mapStateToProps = (state) => ({
     msg: state.welcomeMsg,
-    items: state.addToCart
+    items: state.addToCart,
+    productList: state.getAllProducts.data
 })
 
 export default connect(mapStateToProps)(Product)
