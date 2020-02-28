@@ -1,5 +1,5 @@
 ## Online Store
-A basic online store with only Products and checkout page developed using react, redux, redux-saga. No backend is involved and used only an Firebase API to fetch products.
+A basic online store with only Products and checkout page developed using react, redux, redux-saga. No backend is involved and used only an Firebase API to fetch products. Even filters functionality can be used in Products page.
 
 ## Generate Forms using JSON Schema
 Register page is generated dynamically using JSON schema https://firebasestorage.googleapis.com/v0/b/redux-store-c6c24.appspot.com/o/mockForm.json?alt=media&token=7c98bc90-c245-4fa6-821a-2695a11453d6
